@@ -47,6 +47,22 @@ app.post('/books', (req, res) => {
     });
 });
 
+// PUT: Update a book by id
+app.put('/books/:id', (req, res) => {
+    const bookId = parseInt(req.params.id);
+    const bookIndex = books.findIndex(b => b.id === bookId);
+
+    if (bookIndex !== -1) {
+        books[bookIndex].title = req.body.title;
+        books[bookIndex].author = req.body.author;
+        res.status(200).json({
+            message: 'Book updated successfully',
+            data: books[bookIndex]
+        });
+    } else {
+        res.status(404).json({ message: 'Book not found' });
+    }
+});
 
 // Start the server
 app.listen(port, () => {
