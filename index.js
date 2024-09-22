@@ -33,6 +33,20 @@ app.get('/books/:id', (req, res) => {
     }
 });
 
+// POST: Create a new book
+app.post('/books', (req, res) => {
+    const newBook = {
+        id: books.length + 1,
+        title: req.body.title,
+        author: req.body.author
+    };
+    books.push(newBook);
+    res.status(201).json({
+        message: 'Book created successfully',
+        data: newBook
+    });
+});
+
 
 // Start the server
 app.listen(port, () => {
