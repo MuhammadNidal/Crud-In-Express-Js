@@ -20,6 +20,19 @@ app.get('/', (req, res) => {
 });
 
 // GET: Retrieve a book by id
+app.get('/books/:id', (req, res) => {
+    const bookId = parseInt(req.params.id);
+    const book = books.find(b => b.id === bookId);
+    if (book) {
+        res.status(200).json({
+            message: 'Book retrieved successfully',
+            data: book
+        });
+    } else {
+        res.status(404).json({ message: 'Book not found' });
+    }
+});
+
 
 // Start the server
 app.listen(port, () => {
