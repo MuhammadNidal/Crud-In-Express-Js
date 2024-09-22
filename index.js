@@ -54,11 +54,23 @@ app.put('/books/:id', (req, res) => {
 
     if (bookIndex !== -1) {
         books[bookIndex].title = req.body.title;
-        books[bookIndex].author = req.body.author;
+        books[bookIndex].author = reputq.body.author;
         res.status(200).json({
             message: 'Book updated successfully',
             data: books[bookIndex]
         });
+    } else {
+        res.status(404).json({ message: 'Book not found' });
+    }
+});
+// DELETE: Remove a book by id
+app.delete('/books/:id', (req, res) => {
+    const bookId = parseInt(req.params.id);
+    const bookIndex = books.findIndex(b => b.id === bookId);
+
+    if (bookIndex !== -1) {
+        books.splice(bookIndex, 1);
+        res.status(200).json({ message: 'Book deleted successfully' });
     } else {
         res.status(404).json({ message: 'Book not found' });
     }
